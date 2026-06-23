@@ -1,13 +1,13 @@
 import { S3Client, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 
 // Environment variables for DigitalOcean Spaces
-const SPACES_ENDPOINT = process.env.DO_SPACES_ENDPOINT;
-const SPACES_BUCKET = process.env.DO_SPACES_BUCKET;
-const ACCESS_KEY = process.env.DO_ACCESS_KEY;
-const SECRET_KEY = process.env.DO_SECRET_KEY;
+const SPACES_ENDPOINT = process.env.DO_SPACES_ENDPOINT || 'https://sgp1.digitaloceanspaces.com';
+const SPACES_BUCKET = process.env.DO_SPACES_BUCKET || 'placeholder-bucket';
+const ACCESS_KEY = process.env.DO_ACCESS_KEY || 'placeholder-key';
+const SECRET_KEY = process.env.DO_SECRET_KEY || 'placeholder-secret';
 
-if (!SPACES_ENDPOINT || !SPACES_BUCKET || !ACCESS_KEY || !SECRET_KEY) {
-  console.error('DigitalOcean Spaces configuration is missing! Check your .env.local file.');
+if (!process.env.DO_SPACES_ENDPOINT || !process.env.DO_SPACES_BUCKET || !process.env.DO_ACCESS_KEY || !process.env.DO_SECRET_KEY) {
+  console.warn('DigitalOcean Spaces configuration is missing! Check your .env.local file.');
 }
 
 // Initialize S3 client for DigitalOcean Spaces

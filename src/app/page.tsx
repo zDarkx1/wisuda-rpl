@@ -170,7 +170,7 @@ export default function GuestCheckInPage() {
     try {
       // Upload image to DigitalOcean Spaces via Server Action
       const { uploadBase64ToSpaces } = await import('@/app/actions/spaces');
-      
+
       let photoUrl = "";
       if (capturedImage) {
         // Since the same photo applies to all selected guests in a group check-in,
@@ -226,7 +226,7 @@ export default function GuestCheckInPage() {
             mouseRadius={1}
           />
         </div>
-        
+
         {/* Glass overlay to ensure readability */}
         <div className="absolute inset-0 bg-black/40 backdrop-blur-sm z-0" />
 
@@ -286,7 +286,7 @@ export default function GuestCheckInPage() {
           mouseRadius={1}
         />
       </div>
-      
+
       {/* Glass overlay to ensure readability */}
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm z-0" />
 
@@ -310,176 +310,176 @@ export default function GuestCheckInPage() {
             {/* Header */}
             <div className="flex flex-col space-y-1">
               <h1 className="font-bold text-2xl tracking-wide">
-                Buku Tamu Digital 📖
+                Buku Tamu Digital
               </h1>
               <p className="text-base text-muted-foreground">
                 Wisuda RPL 2026 — Pilih nama Anda dan foto untuk check-in.
               </p>
             </div>
 
-          {dbError && (
-            <div className="bg-destructive/10 border border-destructive p-3 rounded-lg text-sm text-destructive mb-4">
-              ⚠️ {dbError}
-            </div>
-          )}
+            {dbError && (
+              <div className="bg-destructive/10 border border-destructive p-3 rounded-lg text-sm text-destructive mb-4">
+                ⚠️ {dbError}
+              </div>
+            )}
 
-          {/* Search & Select Section */}
-          <div className="space-y-4">
-            <div className="relative" ref={dropdownRef}>
-              <InputGroup>
-                <InputGroupInput
-                  placeholder="Cari nama tamu..."
-                  type="text"
-                  value={searchQuery}
-                  onChange={handleSearch}
-                  onFocus={() => setShowDropdown(true)}
-                />
-                <InputGroupAddon align="inline-start">
-                  <SearchIcon />
-                </InputGroupAddon>
-              </InputGroup>
+            {/* Search & Select Section */}
+            <div className="space-y-4">
+              <div className="relative" ref={dropdownRef}>
+                <InputGroup>
+                  <InputGroupInput
+                    placeholder="Cari nama tamu..."
+                    type="text"
+                    value={searchQuery}
+                    onChange={handleSearch}
+                    onFocus={() => setShowDropdown(true)}
+                  />
+                  <InputGroupAddon align="inline-start">
+                    <SearchIcon />
+                  </InputGroupAddon>
+                </InputGroup>
 
-              {showDropdown && (
-                <div className="absolute left-0 right-0 top-full z-50 mt-1 max-h-48 overflow-y-auto rounded-lg border bg-popover shadow-lg">
-                  {loading ? (
-                    <p className="p-3 text-sm text-muted-foreground">Memuat...</p>
-                  ) : filteredGuests.length === 0 ? (
-                    <p className="p-3 text-sm text-muted-foreground">Tidak ditemukan.</p>
-                  ) : (
-                    filteredGuests.map((guest) => (
+                {showDropdown && (
+                  <div className="absolute left-0 right-0 top-full z-50 mt-1 max-h-48 overflow-y-auto rounded-lg border bg-popover shadow-lg">
+                    {loading ? (
+                      <p className="p-3 text-sm text-muted-foreground">Memuat...</p>
+                    ) : filteredGuests.length === 0 ? (
+                      <p className="p-3 text-sm text-muted-foreground">Tidak ditemukan.</p>
+                    ) : (
+                      filteredGuests.map((guest) => (
+                        <button
+                          key={guest.id}
+                          type="button"
+                          onClick={() => toggleGuestSelection(guest.id)}
+                          className={cn(
+                            "flex w-full items-center justify-between px-3 py-2 text-sm transition-colors hover:bg-accent",
+                            selectedGuestIds.includes(guest.id) && "bg-accent text-accent-foreground"
+                          )}
+                        >
+                          <span className="font-medium">{guest.name}</span>
+                          <span className="text-xs text-muted-foreground">{guest.class_group}</span>
+                        </button>
+                      ))
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {selectedGuests.length > 0 && (
+                <div className="flex flex-wrap gap-2">
+                  {selectedGuests.map((guest) => (
+                    <span
+                      key={guest.id}
+                      className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary"
+                    >
+                      {guest.name}
                       <button
-                        key={guest.id}
                         type="button"
                         onClick={() => toggleGuestSelection(guest.id)}
-                        className={cn(
-                          "flex w-full items-center justify-between px-3 py-2 text-sm transition-colors hover:bg-accent",
-                          selectedGuestIds.includes(guest.id) && "bg-accent text-accent-foreground"
-                        )}
+                        className="ml-1 text-muted-foreground hover:text-foreground"
                       >
-                        <span className="font-medium">{guest.name}</span>
-                        <span className="text-xs text-muted-foreground">{guest.class_group}</span>
+                        ✕
                       </button>
-                    ))
-                  )}
+                    </span>
+                  ))}
                 </div>
               )}
             </div>
 
-            {selectedGuests.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {selectedGuests.map((guest) => (
-                  <span
-                    key={guest.id}
-                    className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary"
-                  >
-                    {guest.name}
-                    <button
-                      type="button"
-                      onClick={() => toggleGuestSelection(guest.id)}
-                      className="ml-1 text-muted-foreground hover:text-foreground"
-                    >
-                      ✕
-                    </button>
-                  </span>
-                ))}
-              </div>
-            )}
-          </div>
+            <AuthDivider>FOTO KEHADIRAN</AuthDivider>
 
-          <AuthDivider>FOTO KEHADIRAN</AuthDivider>
-
-          {/* Camera Section */}
-          <div className="space-y-3">
-            {cameraError && (
-              <div className="rounded-md bg-destructive/10 p-3 text-sm text-destructive">
-                {cameraError}
-              </div>
-            )}
-
-            {!cameraActive && !capturedImage && (
-              <Button
-                type="button"
-                variant="outline"
-                className="w-full"
-                onClick={startCamera}
-              >
-                <CameraIcon data-icon="inline-start" />
-                Buka Kamera
-              </Button>
-            )}
-
-            {cameraActive && (
-              <div className="space-y-3">
-                <div className="overflow-hidden rounded-lg border bg-black">
-                  <video
-                    ref={videoRef}
-                    autoPlay
-                    playsInline
-                    muted
-                    className="h-auto w-full scale-x-[-1]"
-                  />
+            {/* Camera Section */}
+            <div className="space-y-3">
+              {cameraError && (
+                <div className="rounded-md bg-destructive/10 p-3 text-sm text-destructive">
+                  {cameraError}
                 </div>
-                <Button
-                  type="button"
-                  className="w-full"
-                  size="sm"
-                  onClick={capturePhoto}
-                >
-                  <CameraIcon data-icon="inline-start" />
-                  Ambil Foto
-                </Button>
-              </div>
-            )}
+              )}
 
-            {capturedImage && (
-              <div className="space-y-3">
-                <div className="overflow-hidden rounded-lg border">
-                  <img src={capturedImage} alt="Foto kehadiran" className="h-auto w-full" />
-                </div>
+              {!cameraActive && !capturedImage && (
                 <Button
                   type="button"
                   variant="outline"
                   className="w-full"
-                  size="sm"
-                  onClick={retakePhoto}
+                  onClick={startCamera}
                 >
-                  Foto Ulang
+                  <CameraIcon data-icon="inline-start" />
+                  Buka Kamera
                 </Button>
-              </div>
-            )}
-          </div>
+              )}
 
-          <canvas ref={canvasRef} style={{ display: "none" }} />
+              {cameraActive && (
+                <div className="space-y-3">
+                  <div className="overflow-hidden rounded-lg border bg-black">
+                    <video
+                      ref={videoRef}
+                      autoPlay
+                      playsInline
+                      muted
+                      className="h-auto w-full scale-x-[-1]"
+                    />
+                  </div>
+                  <Button
+                    type="button"
+                    className="w-full"
+                    size="sm"
+                    onClick={capturePhoto}
+                  >
+                    <CameraIcon data-icon="inline-start" />
+                    Ambil Foto
+                  </Button>
+                </div>
+              )}
 
-          <Button
-            className="w-full"
-            size="sm"
-            type="button"
-            disabled={submitting || selectedGuestIds.length === 0 || !capturedImage}
-            onClick={handleSubmit}
-          >
-            {submitting ? (
-              "Mengirim..."
-            ) : (
-              <>
-                <CheckCircleIcon data-icon="inline-start" />
-                Submit Kehadiran ({selectedGuestIds.length} tamu)
-              </>
-            )}
-          </Button>
+              {capturedImage && (
+                <div className="space-y-3">
+                  <div className="overflow-hidden rounded-lg border">
+                    <img src={capturedImage} alt="Foto kehadiran" className="h-auto w-full" />
+                  </div>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full"
+                    size="sm"
+                    onClick={retakePhoto}
+                  >
+                    Foto Ulang
+                  </Button>
+                </div>
+              )}
+            </div>
 
-          <div className="mt-4 flex items-center justify-between">
-            <p className="text-muted-foreground text-sm">
-              Wisuda RPL © 2026
-            </p>
-            <a
-              className="text-sm text-muted-foreground underline underline-offset-4 hover:text-primary"
-              href="/admin/login"
+            <canvas ref={canvasRef} style={{ display: "none" }} />
+
+            <Button
+              className="w-full"
+              size="sm"
+              type="button"
+              disabled={submitting || selectedGuestIds.length === 0 || !capturedImage}
+              onClick={handleSubmit}
             >
-              <SettingsIcon className="inline h-3 w-3 mr-1" />
-              Admin
-            </a>
-          </div>
+              {submitting ? (
+                "Mengirim..."
+              ) : (
+                <>
+                  <CheckCircleIcon data-icon="inline-start" />
+                  Submit Kehadiran ({selectedGuestIds.length} tamu)
+                </>
+              )}
+            </Button>
+
+            <div className="mt-4 flex items-center justify-between">
+              <p className="text-muted-foreground text-sm">
+                Wisuda RPL © 2026
+              </p>
+              <a
+                className="text-sm text-muted-foreground underline underline-offset-4 hover:text-primary"
+                href="/admin/login"
+              >
+                <SettingsIcon className="inline h-3 w-3 mr-1" />
+                Admin
+              </a>
+            </div>
           </div>
         </div>
       </div>

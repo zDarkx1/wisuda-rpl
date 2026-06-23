@@ -3,5 +3,5 @@
 import { GooeyToaster } from 'goey-toast';
 
 export function ToasterProvider() {
-  return <GooeyToaster position="bottom-right" />;
+  return <GooeyToaster position="bottom-right" theme="dark" />;
 }

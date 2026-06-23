@@ -31,7 +31,7 @@ export default function AdminDashboard() {
   
   // Form state
   const [newName, setNewName] = useState('');
-  const [newClass, setNewClass] = useState('12 RPL 1');
+  const [newClass, setNewClass] = useState('50 A');
   const [addingGuest, setAddingGuest] = useState(false);
   
   // Check authentication on mount
@@ -215,12 +215,15 @@ export default function AdminDashboard() {
                 className="flex h-10 w-full md:w-64 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 disabled={addingGuest}
               >
-                <option value="10 RPL 1">10 RPL 1</option>
-                <option value="10 RPL 2">10 RPL 2</option>
-                <option value="11 RPL 1">11 RPL 1</option>
-                <option value="11 RPL 2">11 RPL 2</option>
-                <option value="12 RPL 1">12 RPL 1</option>
-                <option value="12 RPL 2">12 RPL 2</option>
+                <option value="50 A">50 A</option>
+                <option value="50 B">50 B</option>
+                <option value="51 A">51 A</option>
+                <option value="51 B">51 B</option>
+                <option value="51 C">51 C</option>
+                <option value="52 A">52 A</option>
+                <option value="52 B">52 B</option>
+                <option value="52 C">52 C</option>
+                <option value="Guru">Guru</option>
                 <option value="VIP / Undangan">VIP / Undangan</option>
                 <option value="Umum">Umum</option>
               </select>
